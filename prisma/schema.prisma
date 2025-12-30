@@ -1,0 +1,42 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  category    String
+  image       String?
+  items       OrderItem[]
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  customerName  String?
+  customerPhone String?
+  address       String?
+  paymentMethod String?
+  changeFor     Float?   // For cash payments: amount customer will pay with
+  total         Float
+  status        String   @default("PENDING") // PENDING, CONFIRMED, MADE, DELIVERED, CANCELED
+  items         OrderItem[]
+  source        String   @default("WEB") // WEB, WHATSAPP_API, POS
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float    // Snapshot of price at time of order
+}
