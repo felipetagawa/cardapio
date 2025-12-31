@@ -1,10 +1,9 @@
-import { ProductForm } from "../components/ProductForm"
+import prisma from "@/lib/prisma"
+import ProductForm from "../ProductForm"
 
-export default function NewProductPage() {
-    return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Novo Produto</h1>
-            <ProductForm />
-        </div>
-    )
+export const revalidate = 0
+
+export default async function NewProductPage() {
+    const categories = await prisma.category.findMany({ orderBy: { order: "asc" } })
+    return <ProductForm categories={categories} />
 }

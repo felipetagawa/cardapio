@@ -1,23 +1,23 @@
 import prisma from "@/lib/prisma"
-import { ProductForm } from "../components/ProductForm"
+import ProductForm from "../ProductForm"
 import { notFound } from "next/navigation"
 
 export const revalidate = 0
 
-export default async function EditProductPage({ params }: { params: { id: string } }) {
+interface EditProductPageProps {
+    params: { id: string }
+}
+
+export default async function EditProductPage({ params }: EditProductPageProps) {
     const id = parseInt(params.id)
-    if (isNaN(id)) return notFound()
+    if (isNaN(id)) notFound()
 
-    const product = await prisma.product.findUnique({
-        where: { id }
-    })
+    const [product, categories] = await Promise.all([
+        prisma.product.findUnique({ where: { id } }),
+        prisma.category.findMany({ orderBy: { order: "asc" } })
+    ])
 
-    if (!product) return notFound()
+    if (!product) notFound()
 
-    return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Editar Produto: {product.name}</h1>
-            <ProductForm product={product} />
-        </div>
-    )
+    return <ProductForm categories={categories} product={product} />
 }

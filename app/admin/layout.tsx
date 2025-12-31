@@ -28,6 +28,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             <Link href="/admin/pos" className="flex items-center gap-2 hover:text-green-400">
                                 <PlusCircle size={20} /> Novo Pedido
                             </Link>
+                            <Link href="/admin/extras" className="flex items-center gap-2 hover:text-green-400">
+                                <PlusCircle size={20} /> Acréscimos
+                            </Link>
                             <button
                                 onClick={handleLogout}
                                 className="flex items-center gap-2 hover:text-red-400 border-l border-gray-700 pl-4"

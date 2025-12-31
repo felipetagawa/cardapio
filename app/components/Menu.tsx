@@ -1,23 +1,30 @@
 "use client"
 
-import { Product } from "@prisma/client"
+import { Product, Category, Extra } from "@prisma/client"
 import { useState } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { ProductItem } from "./ProductItem"
 
+type ProductWithCategory = Product & { category: Category | null }
+type ExtraWithCategory = Extra & { category: Category | null }
+
 interface MenuProps {
-    products: Product[]
+    products: ProductWithCategory[]
+    extras: ExtraWithCategory[]
 }
 
-export function Menu({ products }: MenuProps) {
+export function Menu({ products, extras }: MenuProps) {
     // Group products by category
     const categories = products.reduce((acc, product) => {
-        if (!acc[product.category]) {
-            acc[product.category] = []
+        // Handle potential missing category relation safely
+        const catName = product.category?.name || "Sem Categoria"
+
+        if (!acc[catName]) {
+            acc[catName] = []
         }
-        acc[product.category].push(product)
+        acc[catName].push(product)
         return acc
-    }, {} as Record<string, Product[]>)
+    }, {} as Record<string, ProductWithCategory[]>)
 
     return (
         <div id="menu" className="max-w-4xl mx-auto px-4 mb-16">
@@ -25,14 +32,28 @@ export function Menu({ products }: MenuProps) {
                 Conheça nosso menu
             </h2>
 
-            {Object.entries(categories).map(([category, items]) => (
-                <CategorySection key={category} title={category} items={items} />
-            ))}
+            {Object.entries(categories).map(([category, items]) => {
+                // Find extras for this category (assuming match by Name or ID? logic is by Category relation)
+                // The extras have categoryId. We are grouping products by category Name.
+                // Best to filter extras that match the category of these products.
+                // All items in 'items' have same category ID (usually).
+                const categoryId = items[0]?.categoryId;
+                const categoryExtras = extras.filter(e => e.categoryId === categoryId);
+
+                return (
+                    <CategorySection
+                        key={category}
+                        title={category}
+                        items={items}
+                        extras={categoryExtras}
+                    />
+                )
+            })}
         </div>
     )
 }
 
-function CategorySection({ title, items }: { title: string, items: Product[] }) {
+function CategorySection({ title, items, extras }: { title: string, items: ProductWithCategory[], extras: ExtraWithCategory[] }) {
     const [isOpen, setIsOpen] = useState(false) // Default closed as per legacy "hidden" or open? Legacy had "hidden" initially except maybe first? No, default hidden.
     // Actually legacy had toggle logic. Let's strictly follow it.
 
@@ -52,7 +73,7 @@ function CategorySection({ title, items }: { title: string, items: Product[] }) 
             {isOpen && (
                 <div className="mt-4 animate-fadeIn">
                     {items.map(product => (
-                        <ProductItem key={product.id} product={product} />
+                        <ProductItem key={product.id} product={product} extras={extras} />
                     ))}
                 </div>
             )}

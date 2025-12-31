@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma"
 import POSInterface from "./POSInterface"
 
 export default async function POSPage() {
-    const products = await prisma.product.findMany()
+    const products = await prisma.product.findMany({
+        include: { category: true }
+    })
     return <POSInterface products={products} />
 }

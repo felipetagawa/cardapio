@@ -1,12 +1,14 @@
 "use client"
 
-import { Product } from "@prisma/client"
+import { Product, Category } from "@prisma/client"
 import { useState } from "react"
 import { toast } from "react-toastify"
 import { Trash2 } from "lucide-react"
 import AddressAutocomplete from "../../components/AddressAutocomplete"
 
-export default function POSInterface({ products }: { products: Product[] }) {
+type ProductWithCategory = Product & { category: Category | null }
+
+export default function POSInterface({ products }: { products: ProductWithCategory[] }) {
     const [cart, setCart] = useState<{ product: Product, quantity: number }[]>([])
     const [customerName, setCustomerName] = useState("")
     const [customerPhone, setCustomerPhone] = useState("")
@@ -19,7 +21,7 @@ export default function POSInterface({ products }: { products: Product[] }) {
 
     const filteredProducts = products.filter(p =>
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.category.toLowerCase().includes(searchTerm.toLowerCase())
+        (p.category?.name || "").toLowerCase().includes(searchTerm.toLowerCase())
     )
 
     const addToCart = (product: Product) => {

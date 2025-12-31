@@ -7,11 +7,17 @@ import { Footer } from "../components/Footer"
 export const revalidate = 0
 
 export default async function Home() {
-  const products = await prisma.product.findMany()
+  const products = await prisma.product.findMany({
+    include: { category: true }
+  })
+
+  const extras = await prisma.extra.findMany({
+    include: { category: true }
+  })
 
   return (
     <main className="min-h-screen">
-      <Menu products={products} />
+      <Menu products={products} extras={extras} />
       <Footer />
     </main>
   )

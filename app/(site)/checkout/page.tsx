@@ -54,7 +54,10 @@ export default function Checkout() {
 
             // Construct WhatsApp Message
             const cartItems = cart.map((item) => {
-                return `* ${item.quantity}x ${item.name} | R$ ${item.price.toFixed(2)}`
+                const extrasText = item.extras && item.extras.length > 0
+                    ? `\n   + ${item.extras.map(e => e.name).join(", ")}`
+                    : ""
+                return `* ${item.quantity}x ${item.name}${extrasText} | R$ ${(item.price + (item.extras?.reduce((s, e) => s + e.price, 0) || 0)).toFixed(2)}`
             }).join("\n")
 
             const message = encodeURIComponent(
@@ -102,12 +105,22 @@ export default function Checkout() {
             <div className="bg-white p-4 rounded shadow mb-6">
                 <h2 className="font-bold text-lg mb-2">Itens</h2>
                 {cart.map(item => (
-                    <div key={item.id} className="flex justify-between border-b py-2">
+                    <div key={item.internalId || item.id} className="flex justify-between border-b py-2">
                         <div>
                             <p>{item.quantity}x {item.name}</p>
-                            <p className="text-sm text-gray-500">R$ {item.price.toFixed(2)}</p>
+                            {/* Display Extras */}
+                            {item.extras && item.extras.length > 0 && (
+                                <div className="text-sm text-gray-500 ml-4">
+                                    {item.extras.map(e => (
+                                        <p key={e.id}>+ {e.name} (R$ {e.price.toFixed(2)})</p>
+                                    ))}
+                                </div>
+                            )}
+                            <p className="text-sm text-gray-500">
+                                Unit: R$ {(item.price + (item.extras?.reduce((s, e) => s + e.price, 0) || 0)).toFixed(2)}
+                            </p>
                         </div>
-                        <p>R$ {(item.price * item.quantity).toFixed(2)}</p>
+                        <p>R$ {((item.price + (item.extras?.reduce((s, e) => s + e.price, 0) || 0)) * item.quantity).toFixed(2)}</p>
                     </div>
                 ))}
                 <div className="flex justify-between font-bold text-xl mt-4">

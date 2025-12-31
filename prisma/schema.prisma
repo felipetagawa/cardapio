@@ -7,14 +7,50 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  order    Int?      @default(0)
+  products Product[]
+  extras   Extra[]
+}
+
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
   price       Float
-  category    String
   image       String?
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
   items       OrderItem[]
+  extras      Extra[]
+}
+
+model Extra {
+  id          Int       @id @default(autoincrement())
+  name        String
+  price       Float
+  description String?
+  categoryId  Int
+  category    Category  @relation(fields: [categoryId], references: [id])
+  products    Product[] // Explicit relation for logic if needed (or just by category)
+  // Actually, typical simple implementation: Extra belongs to Category. 
+  // Products in that Category can have those extras.
+  // Or Many-to-Many between Product and Extra?
+  // User asked: "queijo, bacon... uns valor 4,00... clara em qual pastel"
+  // Usually extras are per category (Pasteis vs Bebidas).
+  // Schema below assumes Extra belongs to Category (so all Pasteis have same extras).
+  orderItemExtras OrderItemExtra[]
+}
+
+model OrderItemExtra {
+  id          Int       @id @default(autoincrement())
+  orderItemId Int
+  orderItem   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  extraId     Int
+  extra       Extra     @relation(fields: [extraId], references: [id])
+  price       Float     // Snapshot price
 }
 
 model Order {
@@ -39,4 +75,5 @@ model OrderItem {
   product   Product  @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float    // Snapshot of price at time of order
+  extras    OrderItemExtra[]
 }
