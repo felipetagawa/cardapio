@@ -13,7 +13,15 @@ export default async function AdminDashboard() {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">Pedidos Recentes</h2>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">Pedidos Recentes</h2>
+                <Link
+                    href="/admin/products"
+                    className="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700"
+                >
+                    Gerenciar Produtos
+                </Link>
+            </div>
 
             <div className="bg-white rounded shadow text-sm md:text-base">
                 <div className="overflow-x-auto">
