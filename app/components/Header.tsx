@@ -2,12 +2,7 @@ import Image from "next/image"
 
 export function Header() {
     return (
-        <header className="w-full h-[420px] bg-zinc-900 bg-cover bg-center" style={{ backgroundImage: "url('/assets/bg.png')" }}>
-            {/* Note: bg-home custom class not ported yet, using inline style or standard class if possible. 
-          The legacy used bg-home which likely had a url in CSS. I'll need to check legacy css or just use a placeholder/color. 
-          For now, I'll assume bg-zinc-900 is fine or add a valid image path if known. 
-          The legacy HTML had 'bg-home' in class.
-      */}
+        <header className="w-full h-[420px] bg-zinc-900 bg-cover bg-center">
             <div className="w-full h-full flex flex-col justify-center items-center bg-black/50">
                 <Image
                     src="/assets/pastelLogo.jpg"
