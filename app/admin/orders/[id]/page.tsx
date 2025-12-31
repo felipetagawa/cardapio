@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
+import { PrintControl } from "../../components/PrintControl"
 
 interface OrderPageProps {
     params: { id: string }
@@ -18,8 +19,8 @@ export default async function OrderPrintPage({ params }: OrderPageProps) {
 
     return (
         <div className="max-w-[80mm] mx-auto bg-white p-2 text-black font-mono text-xs">
-            {/* Auto print script */}
-            <script dangerouslySetInnerHTML={{ __html: `window.print()` }} />
+            {/* Auto print and manual control */}
+            <PrintControl />
 
             <div className="text-center border-b pb-2 mb-2 border-black border-dashed">
                 <h1 className="font-bold text-lg">Japa Pastel</h1>

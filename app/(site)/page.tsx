@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma"
-import { Header } from "../components/Header"
 import { Menu } from "../components/Menu"
 import { Footer } from "../components/Footer"
 
@@ -12,7 +11,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
-      <Header />
       <Menu products={products} />
       <Footer />
     </main>
