@@ -5,5 +5,10 @@ export default async function POSPage() {
     const products = await prisma.product.findMany({
         include: { category: true }
     })
-    return <POSInterface products={products} />
+
+    const extras = await prisma.extra.findMany({
+        include: { category: true }
+    })
+
+    return <POSInterface products={products} extras={extras} />
 }

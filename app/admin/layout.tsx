@@ -17,7 +17,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     return (
         <AuthGuard>
-            <div className="min-h-screen bg-gray-100 pb-10">
+            <div className="min-h-screen bg-gray-100 text-gray-900 pb-10">
                 <nav className="bg-zinc-900 text-white p-4">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">
                         <h1 className="text-xl font-bold">Japa ERP</h1>

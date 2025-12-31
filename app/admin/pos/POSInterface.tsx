@@ -1,14 +1,15 @@
 "use client"
 
-import { Product, Category } from "@prisma/client"
+import { Product, Category, Extra } from "@prisma/client"
 import { useState } from "react"
 import { toast } from "react-toastify"
 import { Trash2 } from "lucide-react"
 import AddressAutocomplete from "../../components/AddressAutocomplete"
 
 type ProductWithCategory = Product & { category: Category | null }
+type ExtraWithCategory = Extra & { category: Category | null }
 
-export default function POSInterface({ products }: { products: ProductWithCategory[] }) {
+export default function POSInterface({ products, extras = [] }: { products: ProductWithCategory[], extras?: ExtraWithCategory[] }) {
     const [cart, setCart] = useState<{ product: Product, quantity: number }[]>([])
     const [customerName, setCustomerName] = useState("")
     const [customerPhone, setCustomerPhone] = useState("")
@@ -101,7 +102,7 @@ export default function POSInterface({ products }: { products: ProductWithCatego
                             className="bg-white p-3 rounded shadow hover:bg-green-50 text-left border border-gray-100"
                         >
                             <div className="font-bold text-sm truncate">{p.name}</div>
-                            <div className="text-xs text-gray-500">{p.category}</div>
+                            <div className="text-xs text-gray-500">{p.category?.name}</div>
                             <div className="font-bold text-green-600 mt-1">R$ {p.price.toFixed(2)}</div>
                         </button>
                     ))}

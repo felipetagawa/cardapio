@@ -80,7 +80,7 @@ export function ProductItem({ product, extras = [] }: ProductItemProps) {
 
     return (
         <>
-            <div className="flex gap-2 mb-4 w-full">
+            <div className="flex gap-2 mb-4 w-full bg-zinc-800 p-3 rounded-lg shadow-lg border border-zinc-700 hover:border-green-500 transition-colors">
                 <Image
                     src={product.image || "/assets/pastel.jpeg"}
                     alt={product.name}
@@ -90,17 +90,17 @@ export function ProductItem({ product, extras = [] }: ProductItemProps) {
                 />
                 <div className="flex-1 flex flex-col justify-between">
                     <div>
-                        <p className="font-bold">{product.name}</p>
-                        <p className="text-sm text-gray-600 line-clamp-2">{product.description}</p>
+                        <p className="font-bold text-white text-lg">{product.name}</p>
+                        <p className="text-sm text-gray-400 line-clamp-2">{product.description}</p>
                     </div>
 
                     <div className="flex justify-between items-center mt-2">
-                        <p className="font-bold">
+                        <p className="font-bold text-green-400 text-lg">
                             {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
                         </p>
                         <button
                             onClick={handleAddToCart}
-                            className="bg-gray-900 px-5 py-1 rounded hover:bg-gray-800 duration-200"
+                            className="bg-green-600 px-5 py-2 rounded hover:bg-green-700 duration-200 shadow"
                         >
                             <ShoppingCart className="text-white" size={20} />
                         </button>
