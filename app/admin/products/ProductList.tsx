@@ -10,6 +10,12 @@ type ProductWithCategory = Product & { category: Category | null }
 export default function ProductList({ products }: { products: ProductWithCategory[] }) {
     const router = useRouter()
     const [isDeleting, setIsDeleting] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("")
+
+    const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (product.category?.name || "").toLowerCase().includes(searchTerm.toLowerCase())
+    )
 
     const handleDelete = async (id: number) => {
         if (!confirm("Tem certeza que deseja excluir este produto?")) return
@@ -56,31 +62,39 @@ export default function ProductList({ products }: { products: ProductWithCategor
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map(product => (
-                            <tr key={product.id} className="border-b hover:bg-gray-50">
-                                <td className="p-3 font-medium">{product.name}</td>
-                                <td className="p-3 text-sm text-gray-600">{product.category?.name || "-"}</td>
-                                <td className="p-3">R$ {product.price.toFixed(2)}</td>
-                                <td className="p-3 flex gap-2">
-                                    <Link
-                                        href={`/admin/products/${product.id}`}
-                                        className="bg-blue-100 text-blue-700 p-2 rounded hover:bg-blue-200"
-                                    >
-                                        <Edit size={16} />
-                                    </Link>
-                                    <button
-                                        onClick={() => handleDelete(product.id)}
-                                        disabled={isDeleting}
-                                        className="bg-red-100 text-red-700 p-2 rounded hover:bg-red-200"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
+                        {filteredProducts.length === 0 ? (
+                            <tr>
+                                <td colSpan={4} className="p-8 text-center text-gray-500">
+                                    {searchTerm ? "Nenhum produto encontrado." : "Nenhum produto cadastrado."}
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            filteredProducts.map(product => (
+                                <tr key={product.id} className="border-b hover:bg-gray-50">
+                                    <td className="p-3 font-medium">{product.name}</td>
+                                    <td className="p-3 text-sm text-gray-600">{product.category?.name || "-"}</td>
+                                    <td className="p-3">R$ {product.price.toFixed(2)}</td>
+                                    <td className="p-3 flex gap-2">
+                                        <Link
+                                            href={`/admin/products/${product.id}`}
+                                            className="bg-blue-100 text-blue-700 p-2 rounded hover:bg-blue-200"
+                                        >
+                                            <Edit size={16} />
+                                        </Link>
+                                        <button
+                                            onClick={() => handleDelete(product.id)}
+                                            disabled={isDeleting}
+                                            className="bg-red-100 text-red-700 p-2 rounded hover:bg-red-200"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     )
 }

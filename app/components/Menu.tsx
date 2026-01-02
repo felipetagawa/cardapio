@@ -28,7 +28,7 @@ export function Menu({ products, extras }: MenuProps) {
 
     return (
         <div id="menu" className="max-w-4xl mx-auto px-4 mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mt-9 mb-6 text-white drop-shadow-md">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mt-9 mb-6 text-orange-600 drop-shadow-sm uppercase tracking-wide">
                 Conheça nosso menu
             </h2>
 

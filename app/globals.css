@@ -3,15 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 28, 25, 23;
+  /* stone-900 */
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 250, 250, 249;
+  /* stone-50 */
 }
 
 body {
-  @apply bg-zinc-900 text-gray-100;
-  background-color: #18181b;
-  /* Fallback for bg-zinc-900 */
-  background-image: radial-gradient(#333 1px, transparent 1px);
+  @apply text-stone-900 bg-stone-50;
+  /* Subtle pattern for texture */
+  background-image: radial-gradient(#ea580c 0.5px, transparent 0.5px), radial-gradient(#ea580c 0.5px, #fafaf9 0.5px);
   background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  background-color: #fafaf9;
+  /* stone-50 */
 }

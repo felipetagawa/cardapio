@@ -94,7 +94,7 @@ export default function Checkout() {
     }
 
     return (
-        <div className="max-w-m mx-auto p-4 min-h-screen">
+        <div className="max-w-2xl mx-auto p-4 min-h-screen text-gray-900">
             <header className="mb-6">
                 <Link href="/" className="flex items-center gap-2 font-bold mb-4">
                     <ArrowLeft /> Voltar
