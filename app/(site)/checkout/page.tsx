@@ -94,7 +94,7 @@ export default function Checkout() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto p-4 min-h-screen text-gray-900">
+        <div className="max-w-2xl mx-auto p-4 min-h-screen">
             <header className="mb-6">
                 <Link href="/" className="flex items-center gap-2 font-bold mb-4">
                     <ArrowLeft /> Voltar
@@ -102,7 +102,7 @@ export default function Checkout() {
                 <h1 className="text-2xl font-bold">Confirmar Pedido</h1>
             </header>
 
-            <div className="bg-white p-4 rounded shadow mb-6">
+            <div className="bg-white p-4 rounded shadow mb-6 text-gray-900">
                 <h2 className="font-bold text-lg mb-2">Itens</h2>
                 {cart.map(item => (
                     <div key={item.internalId || item.id} className="flex justify-between border-b py-2">
@@ -129,7 +129,7 @@ export default function Checkout() {
                 </div>
             </div>
 
-            <div className="bg-white p-4 rounded shadow mb-6">
+            <div className="bg-white p-4 rounded shadow mb-6 text-gray-900">
                 <h2 className="font-bold text-lg mb-2">Seus Dados</h2>
 
                 <label className="block mb-2">Nome</label>
@@ -182,7 +182,7 @@ export default function Checkout() {
                 </div>
             </div>
 
-            <div className="bg-white p-4 rounded shadow mb-6">
+            <div className="bg-white p-4 rounded shadow mb-6 text-gray-900">
                 <h2 className="font-bold text-lg mb-2">Forma de Pagamento</h2>
                 <div className="grid grid-cols-2 gap-3">
                     {["Crédito", "Débito", "Dinheiro", "PIX"].map(method => (

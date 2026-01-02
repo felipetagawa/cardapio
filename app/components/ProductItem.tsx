@@ -40,7 +40,7 @@ export function ProductItem({ product, extras = [] }: ProductItemProps) {
                 extras: []
             })
             toast.success(`${product.name} adicionado!`, {
-                autoClose: 1000,
+                autoClose: 500,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: false,

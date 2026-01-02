@@ -28,7 +28,7 @@ export function Menu({ products, extras }: MenuProps) {
 
     return (
         <div id="menu" className="max-w-4xl mx-auto px-4 mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mt-9 mb-6 text-orange-600 drop-shadow-sm uppercase tracking-wide">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mt-9 mb-6 text-stone-200 drop-shadow-sm uppercase tracking-wide">
                 Conheça nosso menu
             </h2>
 
@@ -61,10 +61,10 @@ function CategorySection({ title, items, extras }: { title: string, items: Produ
     // "category-content mt-4 hidden" -> yes, native HTML was hidden.
 
     return (
-        <div className="mb-6 border-b pb-2">
+        <div className="mb-6 border-b border-stone-700 pb-2">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center text-xl font-bold py-2 text-orange-400 hover:text-orange-300 transition-colors"
+                className="w-full flex justify-between items-center text-xl font-bold py-2 text-stone-300 hover:text-white transition-colors"
             >
                 {title}
                 {isOpen ? <ChevronUp /> : <ChevronDown />}

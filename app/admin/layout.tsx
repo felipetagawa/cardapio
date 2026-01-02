@@ -19,23 +19,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <AuthGuard>
             <div className="min-h-screen bg-gray-100 text-gray-900 pb-10">
                 <nav className="bg-zinc-900 text-white p-4">
-                    <div className="max-w-6xl mx-auto flex justify-between items-center">
+                    <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                         <h1 className="text-xl font-bold">Japa ERP</h1>
-                        <div className="flex gap-4 items-center">
+                        <div className="flex flex-wrap justify-center gap-4 items-center">
                             <Link href="/admin" className="flex items-center gap-2 hover:text-green-400">
-                                <ClipboardList size={20} /> Pedidos
+                                <ClipboardList size={20} /> <span>Pedidos</span>
                             </Link>
                             <Link href="/admin/pos" className="flex items-center gap-2 hover:text-green-400">
-                                <PlusCircle size={20} /> Novo Pedido
+                                <PlusCircle size={20} /> <span>Novo</span>
                             </Link>
                             <Link href="/admin/extras" className="flex items-center gap-2 hover:text-green-400">
-                                <PlusCircle size={20} /> Acréscimos
+                                <PlusCircle size={20} /> <span>Acréscimos</span>
                             </Link>
                             <button
                                 onClick={handleLogout}
                                 className="flex items-center gap-2 hover:text-red-400 border-l border-gray-700 pl-4"
                             >
-                                <LogOut size={20} /> Sair
+                                <LogOut size={20} /> <span>Sair</span>
                             </button>
                         </div>
                     </div>

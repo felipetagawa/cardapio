@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${poppins.variable} font-sans antialiased bg-slate-50`}>
+      <body className={`${poppins.variable} font-sans antialiased`}>
         <CartProvider>
           {children}
           <ToastContainer position="bottom-right" />

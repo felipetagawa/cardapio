@@ -3,7 +3,7 @@ import { Footer } from "../components/Footer"
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="min-h-screen pb-20 relative text-stone-900">
+        <div className="min-h-screen pb-20 relative text-stone-200">
             {/* pb-20 to make space for fixed footer */}
             <Header />
             {children}
