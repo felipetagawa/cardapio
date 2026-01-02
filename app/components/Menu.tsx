@@ -14,8 +14,21 @@ interface MenuProps {
 }
 
 export function Menu({ products, extras }: MenuProps) {
-    // Group products by category
-    const categories = products.reduce((acc, product) => {
+    const [searchTerm, setSearchTerm] = useState("")
+
+    // Filter products based on search term
+    const filteredProducts = products.filter(product => {
+        if (!searchTerm) return true
+        const term = searchTerm.toLowerCase()
+        return (
+            product.name.toLowerCase().includes(term) ||
+            product.description?.toLowerCase().includes(term) ||
+            product.category?.name.toLowerCase().includes(term)
+        )
+    })
+
+    // Group filtered products by category
+    const categories = filteredProducts.reduce((acc, product) => {
         // Handle potential missing category relation safely
         const catName = product.category?.name || "Sem Categoria"
 
@@ -32,6 +45,23 @@ export function Menu({ products, extras }: MenuProps) {
                 Conheça nosso menu
             </h2>
 
+            {/* Search Input */}
+            <div className="mb-8 max-w-md mx-auto relative">
+                <input
+                    type="text"
+                    placeholder="Buscar item..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full p-3 rounded-full border border-stone-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-stone-900 shadow-sm"
+                />
+            </div>
+
+            {Object.keys(categories).length === 0 && (
+                <div className="text-center text-stone-400 py-8">
+                    Nenhum produto encontrado.
+                </div>
+            )}
+
             {Object.entries(categories).map(([category, items]) => {
                 // Find extras for this category (assuming match by Name or ID? logic is by Category relation)
                 // The extras have categoryId. We are grouping products by category Name.
@@ -46,6 +76,7 @@ export function Menu({ products, extras }: MenuProps) {
                         title={category}
                         items={items}
                         extras={categoryExtras}
+                        forceOpen={!!searchTerm} // Auto open if searching
                     />
                 )
             })}
@@ -53,9 +84,13 @@ export function Menu({ products, extras }: MenuProps) {
     )
 }
 
-function CategorySection({ title, items, extras }: { title: string, items: ProductWithCategory[], extras: ExtraWithCategory[] }) {
-    const [isOpen, setIsOpen] = useState(false) // Default closed as per legacy "hidden" or open? Legacy had "hidden" initially except maybe first? No, default hidden.
-    // Actually legacy had toggle logic. Let's strictly follow it.
+function CategorySection({ title, items, extras, forceOpen }: { title: string, items: ProductWithCategory[], extras: ExtraWithCategory[], forceOpen?: boolean }) {
+    const [isOpen, setIsOpen] = useState(forceOpen || false) // Default closed as per legacy "hidden" or open? Legacy had "hidden" initially except maybe first? No, default hidden.
+
+    // Sync open state if forceOpen changes (e.g. user starts searching)
+    if (forceOpen && !isOpen) {
+        setIsOpen(true)
+    }
 
     // NOTE: User might prefer all open or all closed. Legacy had them starting hidden? 
     // "category-content mt-4 hidden" -> yes, native HTML was hidden.
