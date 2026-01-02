@@ -121,7 +121,7 @@ export function ProductItem({ product, extras = [] }: ProductItemProps) {
 
                         <div className="mb-4">
                             <p className="font-bold mb-2">{product.name}</p>
-                            <p className="text-gray-600 text-sm mb-4">{product.description}</p>
+                            <p className="text-gray-900 text-sm mb-4">{product.description}</p>
 
                             <p className="font-bold mb-2">Com esse pastel combina:</p>
                             <div className="space-y-2">
@@ -134,8 +134,8 @@ export function ProductItem({ product, extras = [] }: ProductItemProps) {
                                             className={`flex justify-between items-center border p-3 rounded cursor-pointer transition-colors ${isSelected ? 'border-green-500 bg-green-50' : 'border-gray-200'}`}
                                         >
                                             <div>
-                                                <p className="font-medium">{extra.name}</p>
-                                                <p className="text-sm text-gray-500">
+                                                <p className="font-medium text-gray-900">{extra.name}</p>
+                                                <p className="text-sm text-gray-700">
                                                     + {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(extra.price)}
                                                 </p>
                                             </div>

@@ -63,19 +63,12 @@ export function Menu({ products, extras }: MenuProps) {
             )}
 
             {Object.entries(categories).map(([category, items]) => {
-                // Find extras for this category (assuming match by Name or ID? logic is by Category relation)
-                // The extras have categoryId. We are grouping products by category Name.
-                // Best to filter extras that match the category of these products.
-                // All items in 'items' have same category ID (usually).
-                const categoryId = items[0]?.categoryId;
-                const categoryExtras = extras.filter(e => e.categoryId === categoryId);
-
                 return (
                     <CategorySection
                         key={category}
                         title={category}
                         items={items}
-                        extras={categoryExtras}
+                        extras={extras} // Pass ALL extras to each category
                         forceOpen={!!searchTerm} // Auto open if searching
                     />
                 )

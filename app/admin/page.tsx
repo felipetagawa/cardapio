@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma"
 import Link from "next/link"
 import { Printer } from "lucide-react"
 import DateFilter from "./components/DateFilter"
+import { OrderActions } from "./components/OrderActions"
 
 export const revalidate = 0 // Dynamic
 
@@ -98,12 +99,15 @@ export default async function AdminDashboard({ searchParams }: AdminDashboardPro
                                             </span>
                                         </td>
                                         <td className="p-3">
-                                            <Link
-                                                href={`/admin/orders/${order.id}`}
-                                                className="bg-blue-500 text-white px-3 py-1 rounded text-xs flex items-center gap-1 w-fit"
-                                            >
-                                                <Printer size={14} /> Imprimir
-                                            </Link>
+                                            <div className="flex gap-2">
+                                                <Link
+                                                    href={`/admin/orders/${order.id}`}
+                                                    className="bg-blue-500 text-white px-3 py-1 rounded text-xs flex items-center gap-1 w-fit hover:bg-blue-600"
+                                                >
+                                                    <Printer size={14} /> Imprimir
+                                                </Link>
+                                                <OrderActions orderId={order.id} />
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
