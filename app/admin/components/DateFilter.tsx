@@ -50,45 +50,51 @@ export default function DateFilter() {
     }
 
     return (
-        <div className="bg-white p-4 rounded shadow mb-6 flex flex-col md:flex-row gap-4 items-end md:items-center">
-            <div className="flex gap-2 items-center">
-                <Filter size={20} className="text-gray-500" />
-                <span className="font-bold">Filtros:</span>
-            </div>
-
-            <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="border p-2 rounded"
-            >
-                <option value="today">Hoje</option>
-                <option value="period">Período</option>
-            </select>
-
-            {type === "period" && (
+        <div className="bg-white p-4 rounded shadow mb-6">
+            <div className="flex flex-col gap-4">
+                {/* Header Row */}
                 <div className="flex gap-2 items-center">
-                    <input
-                        type="date"
-                        value={startDate}
-                        onChange={e => setStartDate(e.target.value)}
-                        className="border p-2 rounded"
-                    />
-                    <span>até</span>
-                    <input
-                        type="date"
-                        value={endDate}
-                        onChange={e => setEndDate(e.target.value)}
-                        className="border p-2 rounded"
-                    />
+                    <Filter size={20} className="text-gray-500" />
+                    <span className="font-bold">Filtros:</span>
                 </div>
-            )}
 
-            <button
-                onClick={handleFilter}
-                className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-blue-700"
-            >
-                <Calendar size={16} /> Aplicar
-            </button>
+                {/* Filter Controls */}
+                <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                    <select
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                        className="border p-2 rounded w-full sm:w-auto"
+                    >
+                        <option value="today">Hoje</option>
+                        <option value="period">Período</option>
+                    </select>
+
+                    {type === "period" && (
+                        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center w-full sm:w-auto">
+                            <input
+                                type="date"
+                                value={startDate}
+                                onChange={e => setStartDate(e.target.value)}
+                                className="border p-2 rounded w-full sm:w-auto"
+                            />
+                            <span className="hidden sm:inline text-gray-500">até</span>
+                            <input
+                                type="date"
+                                value={endDate}
+                                onChange={e => setEndDate(e.target.value)}
+                                className="border p-2 rounded w-full sm:w-auto"
+                            />
+                        </div>
+                    )}
+
+                    <button
+                        onClick={handleFilter}
+                        className="bg-blue-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2 hover:bg-blue-700 w-full sm:w-auto"
+                    >
+                        <Calendar size={16} /> Aplicar
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }

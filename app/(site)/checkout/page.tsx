@@ -60,8 +60,11 @@ export default function Checkout() {
                 return `* ${item.quantity}x ${item.name}${extrasText} | R$ ${(item.price + (item.extras?.reduce((s, e) => s + e.price, 0) || 0)).toFixed(2)}`
             }).join("\n")
 
+            // Generate random 6-digit order ID for display
+            const displayOrderId = Math.floor(100000 + Math.random() * 900000)
+
             const message = encodeURIComponent(
-                `Ola, gostaria de fazer o pedido #${order.id}:\n\n${cartItems}\n\n*Total: R$ ${total.toFixed(2)}*\n\n*Cliente:* ${name}\n*Endereço:* ${fullAddress}`
+                `🍴 *NOVO PEDIDO #${displayOrderId}*\n\n${cartItems}\n\n💰 *Total: R$ ${total.toFixed(2)}*\n\n👤 *Cliente:* ${name}${fullAddress ? `\n📍 *Endereço:* ${fullAddress}` : ''}${paymentMethod ? `\n💳 *Pagamento:* ${paymentMethod}` : ''}`
             )
 
             // Clear cart locally
@@ -72,7 +75,7 @@ export default function Checkout() {
             // Usually "Send to Store". Let's assume store number.
             // User didn't provide store number. I'll use a placeholder or ask.
             // For now: placeholder 5511999999999.
-            const phoneDest = "5517992762512" // Placeholder, I should ask user or env var.
+            const phoneDest = "5517997496112"
 
             window.location.href = `https://wa.me/${phoneDest}?text=${message}`
 

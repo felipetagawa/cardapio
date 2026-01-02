@@ -12,7 +12,18 @@ export default async function OrderPrintPage({ params }: OrderPageProps) {
 
     const order = await prisma.order.findUnique({
         where: { id },
-        include: { items: { include: { product: true } } }
+        include: {
+            items: {
+                include: {
+                    product: true,
+                    extras: {
+                        include: {
+                            extra: true
+                        }
+                    }
+                }
+            }
+        }
     })
 
     if (!order) return notFound()
@@ -45,11 +56,20 @@ export default async function OrderPrintPage({ params }: OrderPageProps) {
                 </thead>
                 <tbody>
                     {order.items.map(item => (
-                        <tr key={item.id}>
-                            <td>{item.quantity}x</td>
-                            <td>{item.product.name}</td>
-                            <td className="text-right">{item.price.toFixed(2)}</td>
-                        </tr>
+                        <>
+                            <tr key={item.id}>
+                                <td>{item.quantity}x</td>
+                                <td>{item.product.name}</td>
+                                <td className="text-right">{item.price.toFixed(2)}</td>
+                            </tr>
+                            {item.extras.map(orderItemExtra => (
+                                <tr key={orderItemExtra.id}>
+                                    <td></td>
+                                    <td className="pl-2 text-[10px]">+ {orderItemExtra.extra.name}</td>
+                                    <td className="text-right text-[10px]">{orderItemExtra.price.toFixed(2)}</td>
+                                </tr>
+                            ))}
+                        </>
                     ))}
                 </tbody>
             </table>
