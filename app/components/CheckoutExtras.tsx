@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDown, ChevronUp, Plus } from "lucide-react"
-import { CartItem } from "../../context/CartContext"
+import { CartItem } from "../context/CartContext"
 
 interface CheckoutExtrasProps {
     cartItem: CartItem

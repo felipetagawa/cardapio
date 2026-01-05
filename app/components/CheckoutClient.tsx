@@ -1,13 +1,13 @@
 "use client"
 
-import { useCart } from "../../context/CartContext"
+import { useCart } from "../context/CartContext"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import AddressAutocomplete from "../../components/AddressAutocomplete"
-import { CheckoutExtras } from "../../components/CheckoutExtras"
+import AddressAutocomplete from "./AddressAutocomplete"
+import { CheckoutExtras } from "./CheckoutExtras"
 
 interface CheckoutClientProps {
     availableExtras: { id: number; name: string; price: number; description?: string | null }[]
